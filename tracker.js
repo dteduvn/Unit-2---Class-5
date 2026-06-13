@@ -160,6 +160,25 @@ function showSubmitButton(lessonId, lessonName, onCollect) {
     }
   };
   document.body.appendChild(btn);
+
+  // Small "change name" button shown above the submit button
+  const nameBtn = document.createElement('button');
+  nameBtn.id = 'dt-changename-btn';
+  nameBtn.textContent = '👤 ' + (getStudentName() || '');
+  nameBtn.title = 'Đổi tên học sinh / Change student name';
+  nameBtn.style.cssText = `
+    position: fixed; bottom: 70px; right: 18px; z-index: 9998;
+    padding: 6px 14px; font-size: 12px; font-weight: 700;
+    color: #185FA5; background: #fff; border: 1.5px solid #185FA5;
+    border-radius: 20px; cursor: pointer; font-family: inherit;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); max-width: 160px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  `;
+  nameBtn.onclick = async () => {
+    await changeStudentName();
+    nameBtn.textContent = '👤 ' + (getStudentName() || '');
+  };
+  document.body.appendChild(nameBtn);
 }
 
 function showSubmitSuccess(totalScore, maxScore) {
